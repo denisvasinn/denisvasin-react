@@ -1,0 +1,35 @@
+{
+  "name": "denisvasin-react",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal site",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denisvasinn/denisvasin-react.git"
+  },
+  "author": "Denis Vasin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denisvasinn/denisvasin-react/issues"
+  },
+  "homepage": "https://github.com/denisvasinn/denisvasin-react#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^5.0.0-alpha.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "babel-loader": "^7.1.2",
+    "css-loader": "^0.28.5",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "stylus-loader": "^3.0.1",
+    "webpack": "^3.5.5"
+  }
+}
