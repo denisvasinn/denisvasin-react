@@ -6,7 +6,8 @@
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set DEBUG=* & nodemon"
+    "build": "SET NODE_ENV=development & ./node_modules/webpack/bin/webpack.js --progress --display-error-details",
+    "start": "SET NODE_ENV=development & nodemon"
   },
   "repository": {
     "type": "git",
@@ -21,12 +22,12 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "compression": "^1.7.0",
-    "debug": "^3.0.1",
     "emailjs": "^1.0.12",
     "express": "^5.0.0-alpha.2",
     "helmet": "^3.8.1",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.4",

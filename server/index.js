@@ -7,10 +7,10 @@ const express = require('express');
 const helmet = require('helmet');
 const compression = require('compression');
 const bodyParser = require('body-parser');
+const logger = require('winston');
 const indexRouter = require('./routes/index-router');
 const mailRouter = require('./routes/mail-router');
 const config = require('../config');
-const debug = require('debug')('app');
 const loggerMiddleware = require('./middlewares/logger-middleware');
 const errorMiddleware = require('./middlewares/error-middleware');
 
@@ -38,5 +38,5 @@ https
     .createServer(options, app)
     .listen(
         app.get('port'),
-        () => debug(`Listening in ${app.get('env')} mode on port ${app.get('port')}.`)
+        () => logger.info(`Listening in ${app.get('env')} mode on port ${app.get('port')}.`)
     );

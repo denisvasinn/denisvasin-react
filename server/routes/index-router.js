@@ -8,7 +8,7 @@ const html = `
             <title>DENIS VASIN</title>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0" />
-            <link rel="stylesheet" href="clint/index-page.css" />
+            <link rel="stylesheet" href="client/index-page.css" />
         </head>
         <body>
             <div id="root"></div>
