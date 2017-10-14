@@ -1,0 +1,21 @@
+@import "../../../../common/common.styl";
+
+.menu-item-component {
+    margin-right: 10px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    a {
+        color: $colors.gray;
+        font: 14px $font-family;
+        font-weight: 500;
+        text-decoration: none;
+        text-transform: uppercase; 
+    }
+
+    a:hover, a.active {
+        color: $colors.red;
+    }
+}

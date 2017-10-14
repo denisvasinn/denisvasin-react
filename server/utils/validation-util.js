@@ -1,60 +1,33 @@
- // TODO
+const errors = [];
 
-class Validation {
-    constructor (req) {
-        this.errors = [];
-        this.data = req.method === 'GET' ? req.query : req.body;
-        if (Object.keys(this.data).length === 0) {
-            errors.push('Нечего валидировать');
-        }
-        Object.keys(this.data).map((field) => {
-            const value = this.data[filed].trim();
-            return this.replaceTag(value);
-        })
-    }
+function check (obj = {}, key = '') {
+    check.this = obj;
+    check.key = key;
 
-    replaceTag (value) {
-        const tagsToReplace = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;'
-        };
-    
-        return value.replace(/[&<>]/g, (tag) => tagsToReplace[tag] || tag);
-    }
-
-    // TODO
-    // check (key) {
-    //     this.isRequired = this.isRequired.bind(this, key);
-    //     this.minLength = this.minLength.bind(this, key);
-    //     this.pattern = this.pattern.bind(this, key);
-    //     return this;
-    // }
-
-    isRequired (key, errorMessage) {
-        if (!Boolean(this.data[key])) {
-            this.errors.push(errorMessage || `Отсутствует обязательное поле ${key}.`);
-        }
-        return this;
-    }
-
-    minLength (key, length, errorMessage) {
-        if (this.data[key].length < length) {
-            this.errors.push(errorMessage || `Поле ${key} короче ожидаемого.`);
-        }
-        return this;
-    }
-
-    patern (key, pattern, errorMessage) {
-        if (!Boolean(pattern.test(this.data[key]))) {
-            this.errors.push(errorMessage || `Поле ${key} не совпадает с ожидаемым паттерном.`);
-        }
-        return this;
-    }
-
-    getResult (callback) {
-        return callback(this.errors.length === 0 ? null : this.errors, data);
-    }
+    return check;
 }
 
-module.exports = Validation;
+check.isRequired = (errorMessage) => {
+    if (!check.this[check.key]) {
+        errors.push(errorMessage || `Отсутствует обязательное поле ${check.key}.`);
+    }
+    return check;
+};
+
+check.minLength = (length, errorMessage) => {
+    if (!check.this[check.key] || check.this[check.key].length < length) {
+        errors.push(errorMessage || `Поле ${check.key} короче ожидаемого.`);
+    }
+    return check;
+};
+
+check.pattern = (pattern, errorMessage) => {
+    if (!check.this[check.key] || !pattern.test(check.this[check.key])) {
+        errors.push(errorMessage || `Поле ${check.key} не совпадает с ожидаемым паттерном.`);
+    }
+    return check;
+};
+
+check.getErrors = () => errors;
+
+module.exports = check;

@@ -1,8 +1,6 @@
-const debug = require('debug')('https');
+const logger = require('winston');
 
-function loggerMiddleware (req, res, next) {
-    debug(`${req.method} ${req.url}`);
+module.exports = (req, res, next) => {
+    logger.info(`${req.method} ${req.url}`);
     next();
-}
-
-module.exports = loggerMiddleware;
+};

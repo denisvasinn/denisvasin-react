@@ -1,5 +1,6 @@
 const emailjs = require('emailjs/email');
 const config = require('../../config').mail;
+const CustomError = require('../utils/custom-error');
 
 const server = emailjs.server.connect({
     user: config.user,
@@ -10,7 +11,7 @@ const server = emailjs.server.connect({
 
 function send (subject, data) {
     return new Promise((resolve, reject) => {
-        this.server.send({
+        server.send({
             from: 'Личный сайт',
             to: config.to,
             subject: subject,
@@ -23,7 +24,7 @@ function send (subject, data) {
         },
         (err, message) => {
             if (err || !message) {
-                reject(err || new Error('Ошибка при попытке отправить сообщение.'));
+                reject(err || new CustomError(500, 'Ошибка при попытке отправить сообщение.'));
             }
             resolve();
         });
@@ -31,13 +32,19 @@ function send (subject, data) {
 }
 
 function sendMessage ({name, subject, data, email}) {
-    data = `Пользователь <b>${name}</b> с эл.ящиком: <a target='_blank' href='mailto:${email}'>${email}</a> сказал:<br/> ${data}`;
+    data = `
+        Пользователь <b>${name}</b> с эл.ящиком:
+        <a target='_blank' href='mailto:${email}'>${email}</a> сказал:<br/> ${data}
+    `;
     return send(subject, data);
 }
 
 function sendSpecials (err) {
     const subject = 'Неполадки';
-    const data = `На личном сайте возникли какие-то неполадки. Объект ошибки: <br/><code>${JSON.stringify(err, '    ', true)}</code>`;
+    const data = `
+        На личном сайте возникли какие-то неполадки.
+        Объект ошибки: <br/><code>${JSON.stringify(err, '  ', true)}</code>
+    `;
     return send(subject, data);
 }
 

@@ -9,11 +9,17 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'build/client'),
         filename: 'index-page.js',
-        publicPath: '/'
+        publicPath: '/client/'
     },
     externals: {
         React: 'react',
         ReactDom: 'react-dom'
+    },
+    resolve: {
+        alias: {
+            src: path.resolve(__dirname, 'src')
+        },
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [
@@ -43,6 +49,10 @@ module.exports = {
                     },
                     'stylus-loader'
                 ])
+            },
+            {
+                test: /\.(png|img|jpeg)$/,
+                loader: 'file-loader'
             }
         ]
     },

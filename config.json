@@ -6,5 +6,6 @@
       "host": "smtp.gmail.com",
       "ssl": true,
       "to": "denis.vasinn@gmail.com"
-  }
+  },
+  "recaptcha": "6LfpATIUAAAAAPnCWcGJ8ix68jwwdkMH5lWjANxH"
 }

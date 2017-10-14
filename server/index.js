@@ -8,13 +8,12 @@ const helmet = require('helmet');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const logger = require('winston');
-const indexRouter = require('./routes/index-router');
-const mailRouter = require('./routes/mail-router');
 const config = require('../config');
+const indexPageMiddleware = require('./middlewares/index-page-middleware');
+const mailMiddleware = require('./middlewares/mail-middleware');
+const pingMiddeware = require('./middlewares/ping-middleware');
 const loggerMiddleware = require('./middlewares/logger-middleware');
 const errorMiddleware = require('./middlewares/error-middleware');
-
-process.env.NODE_ENV = 'development';   //'production'
 
 const options = {
     key: fs.readFileSync(path.join(__dirname, '../ssl/private.pem')),
@@ -23,15 +22,16 @@ const options = {
 const app = express();
 
 app
-    .set('env', process.env.NODE_ENV)
+    .set('env', process.env.NODE_ENV || 'development')
     .set('port', process.env.PORT || config.port)
     .use(helmet())
     .use(compression())
     .use(express.static(path.join(__dirname, '../build')))
     .use(bodyParser.json())
     .use(loggerMiddleware)
-    .use('/', indexRouter)
-    .use('/mail', mailRouter)
+    .post('/mailto', mailMiddleware)
+    .get('/ping', pingMiddeware)
+    .get('/*', indexPageMiddleware)
     .use(errorMiddleware);
 
 https
